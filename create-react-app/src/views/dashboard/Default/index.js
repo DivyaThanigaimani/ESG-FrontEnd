@@ -9,6 +9,7 @@ import PopularCard from './PopularCard';
 
 import TotalGrowthBarChart from './TotalGrowthBarChart';
 import { gridSpacing } from 'store/constant';
+import DropDownSection from './DropDownSection'
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
@@ -35,6 +36,10 @@ const Dashboard = () => {
           </Grid>
         </Grid>
       </Grid>
+      <Grid item xs={12}>
+         <DropDownSection></DropDownSection>
+      </Grid>
+      
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} md={8}>
