@@ -14,9 +14,12 @@ import Chart from 'react-apexcharts';
 import SkeletonTotalGrowthBarChart from 'ui-component/cards/Skeleton/TotalGrowthBarChart';
 import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
+//import cardSlice from 'slice/cardSlice';
 
 // chart data
+//
 import chartData from './chart-data/total-growth-bar-chart';
+
 
 const status = [
   {
@@ -35,7 +38,7 @@ const status = [
 
 // ==============================|| DASHBOARD DEFAULT - TOTAL GROWTH BAR CHART ||============================== //
 
-const TotalGrowthBarChart = ({ isLoading }) => {
+const TotalGrowthBarChart = ({ isLoading ,chartingData}) => {
   const [value, setValue] = useState('today');
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
@@ -50,7 +53,9 @@ const TotalGrowthBarChart = ({ isLoading }) => {
   const primaryDark = theme.palette.primary.dark;
   const secondaryMain = theme.palette.secondary.main;
   const secondaryLight = theme.palette.secondary.light;
-
+  console.log(chartData);
+  chartData.series=chartingData.series;
+  //const chartData=BarChartData.chartData;
   useEffect(() => {
     const newChartData = {
       ...chartData.options,
@@ -87,10 +92,10 @@ const TotalGrowthBarChart = ({ isLoading }) => {
       ApexCharts.exec(`bar-chart`, 'updateOptions', newChartData);
     }
   }, [navType, primary200, primaryDark, secondaryMain, secondaryLight, primary, darkLight, grey200, isLoading, grey500]);
-
+if(chartData!=null){
   return (
     <>
-      {isLoading ? (
+      {isLoading && chartData ? (
         <SkeletonTotalGrowthBarChart />
       ) : (
         <MainCard>
@@ -100,10 +105,10 @@ const TotalGrowthBarChart = ({ isLoading }) => {
                 <Grid item>
                   <Grid container direction="column" spacing={1}>
                     <Grid item>
-                      <Typography variant="subtitle2">Total Growth</Typography>
+                      <Typography variant="subtitle2">Total C02 Reduction</Typography>
                     </Grid>
                     <Grid item>
-                      <Typography variant="h3">$2,324.00</Typography>
+                      <Typography variant="h3">2,324.00</Typography>
                     </Grid>
                   </Grid>
                 </Grid>
@@ -126,6 +131,7 @@ const TotalGrowthBarChart = ({ isLoading }) => {
       )}
     </>
   );
+                    }
 };
 
 TotalGrowthBarChart.propTypes = {

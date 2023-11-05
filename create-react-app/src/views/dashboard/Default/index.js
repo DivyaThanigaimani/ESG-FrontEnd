@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 
 // project imports
 import EarningCard from './EarningCard';
-import PopularCard from './PopularCard';
+//import PopularCard from './PopularCard';
 
 import TotalGrowthBarChart from './TotalGrowthBarChart';
 import { gridSpacing } from 'store/constant';
@@ -16,6 +16,8 @@ import DropDownSection from './DropDownSection'
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
   const cardList=useSelector((state) => state.cardSlice.cardData);
+  const chartData=useSelector((state) => state.cardSlice.carbonData);
+  console.log(chartData);
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -42,11 +44,11 @@ const Dashboard = () => {
       
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
-          <Grid item xs={12} md={8}>
-            <TotalGrowthBarChart isLoading={isLoading} />
-          </Grid>
+          {chartData!=null?(<Grid item xs={12} md={8}>
+            <TotalGrowthBarChart chartingData={chartData} isLoading={isLoading} />
+          </Grid>):(<h1>No Data</h1>)}
           <Grid item xs={12} md={4}>
-            <PopularCard isLoading={isLoading} />
+           
           </Grid>
         </Grid>
       </Grid>
