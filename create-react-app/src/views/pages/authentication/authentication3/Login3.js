@@ -1,19 +1,12 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 
-// project imports
 import AuthWrapper1 from '../AuthWrapper1';
 import AuthCardWrapper from '../AuthCardWrapper';
 import AuthLogin from '../auth-forms/AuthLogin';
-import Logo from 'ui-component/Logo';
 import AuthFooter from 'ui-component/cards/AuthFooter';
-
-// assets
-
-// ================================|| AUTH3 - LOGIN ||================================ //
 
 const Login = () => {
   const theme = useTheme();
@@ -28,20 +21,15 @@ const Login = () => {
               <AuthCardWrapper>
                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                   <Grid item sx={{ mb: 3 }}>
-                    <Link to="#">
-                      <Logo />
-                    </Link>
+                    <Typography variant="h3">
+                      ESG
+                    </Typography>
                   </Grid>
                   <Grid item xs={12}>
                     <Grid container direction={matchDownSM ? 'column-reverse' : 'row'} alignItems="center" justifyContent="center">
                       <Grid item>
                         <Stack alignItems="center" justifyContent="center" spacing={1}>
-                          <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
-                            Hi, Welcome Back
-                          </Typography>
-                          <Typography variant="caption" fontSize="16px" textAlign={matchDownSM ? 'center' : 'inherit'}>
-                            Enter your credentials to continue
-                          </Typography>
+                          {/* Any additional elements can be added here */}
                         </Stack>
                       </Grid>
                     </Grid>
@@ -55,7 +43,7 @@ const Login = () => {
                   <Grid item xs={12}>
                     <Grid item container direction="column" alignItems="center" xs={12}>
                       <Typography component={Link} to="/pages/register/register3" variant="subtitle1" sx={{ textDecoration: 'none' }}>
-                        Don&apos;t have an account?
+                        Dont have an account?
                       </Typography>
                     </Grid>
                   </Grid>
