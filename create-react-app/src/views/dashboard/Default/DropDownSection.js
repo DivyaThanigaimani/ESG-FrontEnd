@@ -76,6 +76,7 @@ const DropDownSection = () => {
           >
            
             <MenuItem value="Quaterly">Quaterly</MenuItem>
+            <MenuItem value="Yearly">Yearly</MenuItem>
           </Select>
         </FormControl>
 
