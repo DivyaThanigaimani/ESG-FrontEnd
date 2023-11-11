@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .dropdown {
+    margin: 0 10px;
+    text-align: center;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  select {
+    width: 150px;
+  }
+  
+  button {
+    margin-top: 10px;
+  }
+  
