@@ -141,7 +141,7 @@ const FirebaseRegister = ({ ...others }) => {
       handleSnackbarOpen('User registered successfully');
 
       // Navigate to the login page
-      navigate('/pages/login/login3');
+      navigate('/');
 
     })
       .catch(error => {
