@@ -1,6 +1,13 @@
-import { useState, useEffect } from 'react';
+
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import React, { useRef, useState, useEffect } from 'react'
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Paper from '@mui/material/Paper';
+import { useNavigate } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -39,15 +46,28 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
 const FirebaseRegister = ({ ...others }) => {
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
   const theme = useTheme();
   const scriptedRef = useScriptRef();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const customization = useSelector((state) => state.customization);
   const [showPassword, setShowPassword] = useState(false);
   const [checked, setChecked] = useState(true);
+  const navigate = useNavigate(); 
 
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
+
+// default values for drop downfields
+  const sectorOptions = ['manufacturing', 'sector2', 'sector3', 'sector4'];
+  const countryOptions = ['Canada', 'Country2', 'Country3']; 
+  const roleOptions = ['student', 'manager']; 
+
+  useEffect(() => {
+    changePassword('123456');
+  }, []);
+
 
   const googleHandler = async () => {
     console.error('Register');
@@ -67,88 +87,116 @@ const FirebaseRegister = ({ ...others }) => {
     setLevel(strengthColor(temp));
   };
 
-  useEffect(() => {
-    changePassword('123456');
-  }, []);
+  
+
+  const userRef = useRef({
+    emailAddress: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    role: '',
+    company: '',
+    sector: '',
+    country: '',
+  });
+  
+  const handleForm = (values) => {
+    //console.log("Form Values:", values);
+    // Check for required fields
+  const requiredFields = ['firstName', 'lastName', 'email', 'password', 'company', 'sector', 'country', 'phoneNumber', 'role'];
+
+  const missingFields = requiredFields.filter(field => !values[field]);
+
+  if (missingFields.length > 0) {
+    // Display pop-up message for missing fields
+    handleSnackbarOpen(`Please fill in the required fields to register`);
+    return;
+  }
+    // Update the userRef with form values
+    userRef.current = {
+      emailAddress: values.email,
+      password: values.password,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      phoneNumber: values.phoneNumber,
+      role: values.role,
+      company: values.company,
+      sector: values.sector,
+      country: values.country,
+    };
+
+    //console.log("userRef.current:", userRef.current);
+    // Make a POST request to your backend API
+    fetch('http://localhost:8080/registerUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userRef.current),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      handleSnackbarOpen('User registered successfully');
+
+      // Navigate to the login page
+      navigate('/pages/login/login3');
+
+    })
+      .catch(error => {
+        // Handle any errors here
+        console.error('There was a problem with the fetch operation:', error);
+        // You can set an error message or handle errors in a way that fits your application
+        handleSnackbarOpen('Email already exists. Please login');
+      });
+  }
+
+  
+
+  const handleSnackbarOpen = (message) => {
+    setSnackbarMessage(message);
+    setOpenSnackbar(true);
+  };
+
 
   return (
+    
     <>
       <Grid container direction="column" justifyContent="center" spacing={2}>
         <Grid item xs={12}>
-          <AnimateButton>
-            <Button
-              variant="outlined"
-              fullWidth
-              onClick={googleHandler}
-              size="large"
-              sx={{
-                color: 'grey.700',
-                backgroundColor: theme.palette.grey[50],
-                borderColor: theme.palette.grey[100]
-              }}
-            >
-              <Box sx={{ mr: { xs: 1, sm: 2, width: 20 } }}>
-                <img src={Google} alt="google" width={16} height={16} style={{ marginRight: matchDownSM ? 8 : 16 }} />
-              </Box>
-              Sign up with Google
-            </Button>
-          </AnimateButton>
+          
         </Grid>
-        <Grid item xs={12}>
-          <Box sx={{ alignItems: 'center', display: 'flex' }}>
-            <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
-            <Button
-              variant="outlined"
-              sx={{
-                cursor: 'unset',
-                m: 2,
-                py: 0.5,
-                px: 7,
-                borderColor: `${theme.palette.grey[100]} !important`,
-                color: `${theme.palette.grey[900]}!important`,
-                fontWeight: 500,
-                borderRadius: `${customization.borderRadius}px`
-              }}
-              disableRipple
-              disabled
-            >
-              OR
-            </Button>
-            <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
-          </Box>
-        </Grid>
-        <Grid item xs={12} container alignItems="center" justifyContent="center">
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle1">Sign up with Email address</Typography>
-          </Box>
-        </Grid>
+        
+        
       </Grid>
 
       <Formik
         initialValues={{
+          firstName: '', // Add firstName
+          lastName: '', // Add lastName
           email: '',
           password: '',
-          submit: null
+          company: '', // Add company
+          sector: '', // Set default sector value
+          country: '', // Set default country value
+          phoneNumber: '', // Add phoneNumber
+          role: '', // Set default role value
+          submit: null,
         }}
         validationSchema={Yup.object().shape({
+          firstName: Yup.string().required('First Name is required'),
+          lastName: Yup.string().required('Last Name is required'),
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-          password: Yup.string().max(255).required('Password is required')
+          password: Yup.string().max(255).required('Password is required'),
+          company: Yup.string().required('Company is required'),
+          phoneNumber: Yup.string().required('Phone Number is required'),
+          sector: Yup.string().required('Sector is required'), // Add validation for sector
+          country: Yup.string().required('Country is required'), // Add validation for country
+          role: Yup.string().required('Role is required'), // Add validation for role
         })}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-          try {
-            if (scriptedRef.current) {
-              setStatus({ success: true });
-              setSubmitting(false);
-            }
-          } catch (err) {
-            console.error(err);
-            if (scriptedRef.current) {
-              setStatus({ success: false });
-              setErrors({ submit: err.message });
-              setSubmitting(false);
-            }
-          }
-        }}
+        
+        onSubmit={handleForm}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit} {...others}>
@@ -158,9 +206,10 @@ const FirebaseRegister = ({ ...others }) => {
                   fullWidth
                   label="First Name"
                   margin="normal"
-                  name="fname"
+                  name="firstName"
                   type="text"
-                  defaultValue=""
+                  value={values.firstName}
+                  onChange={handleChange} 
                   sx={{ ...theme.typography.customInput }}
                 />
               </Grid>
@@ -169,9 +218,10 @@ const FirebaseRegister = ({ ...others }) => {
                   fullWidth
                   label="Last Name"
                   margin="normal"
-                  name="lname"
+                  name="lastName"
                   type="text"
-                  defaultValue=""
+                  value={values.lastName}
+                  onChange={handleChange}
                   sx={{ ...theme.typography.customInput }}
                 />
               </Grid>
@@ -229,6 +279,80 @@ const FirebaseRegister = ({ ...others }) => {
               )}
             </FormControl>
 
+            <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
+  <InputLabel htmlFor="outlined-adornment-sector">Sector</InputLabel>
+  <Select
+    id="outlined-adornment-sector"
+    value={values.sector}
+    name="sector"
+    onChange={handleChange}
+  >
+    {sectorOptions.map((option) => (
+      <MenuItem key={option} value={option}>
+        {option}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
+
+<FormControl fullWidth sx={{ ...theme.typography.customInput }}>
+  <InputLabel htmlFor="outlined-adornment-country">Country</InputLabel>
+  <Select
+    id="outlined-adornment-country"
+    value={values.country}
+    name="country"
+    onChange={handleChange}
+  >
+    {countryOptions.map((option) => (
+      <MenuItem key={option} value={option}>
+        {option}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
+
+            <TextField
+              fullWidth
+              label="Company"
+              margin="normal"
+              name="company"
+              type="text"
+              value={values.company}
+              onChange={handleChange}
+              //defaultValue=""
+              sx={{ ...theme.typography.customInput }}
+            />
+
+            <TextField
+              fullWidth
+              label="Phone Number"
+              margin="normal"
+              name="phoneNumber"
+              type="text"
+              value={values.phoneNumber}
+              onChange={handleChange}
+              //defaultValue=""
+              sx={{ ...theme.typography.customInput }}
+            />
+
+            <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
+              <InputLabel htmlFor="outlined-adornment-role">Role</InputLabel>
+              <Select
+                id="outlined-adornment-role"
+                value={values.role}
+                name="role"
+                onChange={handleChange}
+              >
+                {roleOptions.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            
+
             {strength !== 0 && (
               <FormControl fullWidth>
                 <Box sx={{ mb: 2 }}>
@@ -254,11 +378,8 @@ const FirebaseRegister = ({ ...others }) => {
                   }
                   label={
                     <Typography variant="subtitle1">
-                      Agree with &nbsp;
-                      <Typography variant="subtitle1" component={Link} to="#">
-                        Terms & Condition.
-                      </Typography>
-                    </Typography>
+      Agree with Terms & Conditions.
+    </Typography>
                   }
                 />
               </Grid>
@@ -271,14 +392,29 @@ const FirebaseRegister = ({ ...others }) => {
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
-                  Sign up
+                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary"  onClick={handleForm}>
+                  REGISTER
                 </Button>
               </AnimateButton>
             </Box>
           </form>
         )}
       </Formik>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000} // Adjust the duration as needed (in milliseconds)
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={() => setOpenSnackbar(false)}
+          severity="info" // You can change the severity (info, success, warning, error)
+        >
+          {snackbarMessage}
+        </MuiAlert>
+      </Snackbar>
+
     </>
   );
 };

@@ -19,6 +19,7 @@ const Register = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
+  
   return (
     <AuthWrapper1>
       <Grid container direction="column" justifyContent="flex-end" sx={{ minHeight: '100vh' }}>
@@ -27,21 +28,26 @@ const Register = () => {
             <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
               <AuthCardWrapper>
                 <Grid container spacing={2} alignItems="center" justifyContent="center">
-                  <Grid item sx={{ mb: 3 }}>
-                    <Link to="#">
-                      <Logo />
-                    </Link>
-                  </Grid>
+                  
                   <Grid item xs={12}>
                     <Grid container direction={matchDownSM ? 'column-reverse' : 'row'} alignItems="center" justifyContent="center">
                       <Grid item>
                         <Stack alignItems="center" justifyContent="center" spacing={1}>
-                          <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
-                            Sign up
-                          </Typography>
-                          <Typography variant="caption" fontSize="16px" textAlign={matchDownSM ? 'center' : 'inherit'}>
-                            Enter your credentials to continue
-                          </Typography>
+                        <Typography
+  color={theme.palette.secondary.main}
+  gutterBottom
+  variant={matchDownSM ? 'h3' : 'h2'}
+  sx={{
+    fontSize: matchDownSM ? '1.5rem' : '2.5rem', // Adjust the size as needed
+    fontWeight: 700, // Adjust the font weight as needed
+    borderBottom: `2px solid ${theme.palette.secondary.main}`, // Add a line under the text
+    mb: 1,
+    // Add any other styles y ou want here
+  }}
+>
+SIGN UP
+</Typography>
+
                         </Stack>
                       </Grid>
                     </Grid>
