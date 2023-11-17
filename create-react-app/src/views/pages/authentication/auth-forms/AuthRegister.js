@@ -1,21 +1,20 @@
-
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+//import { Link } from 'react-router-dom';
+//import { useSelector } from 'react-redux';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import React, { useRef, useState, useEffect } from 'react'
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import Paper from '@mui/material/Paper';
+ 
 import { useNavigate } from 'react-router-dom';
-
+ 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
   Box,
   Button,
   Checkbox,
-  Divider,
+ // Divider,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -28,67 +27,67 @@ import {
   Typography,
   useMediaQuery
 } from '@mui/material';
-
+ 
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-
+ 
 // project imports
-import useScriptRef from 'hooks/useScriptRef';
-import Google from 'assets/images/icons/social-google.svg';
+//import useScriptRef from 'hooks/useScriptRef';
+//import Google from 'assets/images/icons/social-google.svg';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { strengthColor, strengthIndicator } from 'utils/password-strength';
-
+ 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
+ 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
-
+ 
 const FirebaseRegister = ({ ...others }) => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const theme = useTheme();
-  const scriptedRef = useScriptRef();
+ // const scriptedRef = useScriptRef();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
-  const customization = useSelector((state) => state.customization);
+  //const customization = useSelector((state) => state.customization);
   const [showPassword, setShowPassword] = useState(false);
   const [checked, setChecked] = useState(true);
-  const navigate = useNavigate(); 
-
+  const navigate = useNavigate();
+ 
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
-
+ 
 // default values for drop downfields
   const sectorOptions = ['manufacturing', 'sector2', 'sector3', 'sector4'];
-  const countryOptions = ['Canada', 'Country2', 'Country3']; 
-  const roleOptions = ['student', 'manager']; 
-
+  const countryOptions = ['Canada', 'Country2', 'Country3'];
+  const roleOptions = ['student', 'manager'];
+ 
   useEffect(() => {
     changePassword('123456');
   }, []);
-
-
-  const googleHandler = async () => {
-    console.error('Register');
-  };
-
+ 
+ 
+  //const googleHandler = async () => {
+    //console.error('Register');
+  //};
+ 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
+ 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+ 
   const changePassword = (value) => {
     const temp = strengthIndicator(value);
     setStrength(temp);
     setLevel(strengthColor(temp));
   };
-
-  
-
+ 
+ 
+ 
   const userRef = useRef({
     emailAddress: '',
     password: '',
@@ -100,14 +99,14 @@ const FirebaseRegister = ({ ...others }) => {
     sector: '',
     country: '',
   });
-  
+ 
   const handleForm = (values) => {
     //console.log("Form Values:", values);
     // Check for required fields
   const requiredFields = ['firstName', 'lastName', 'email', 'password', 'company', 'sector', 'country', 'phoneNumber', 'role'];
-
+ 
   const missingFields = requiredFields.filter(field => !values[field]);
-
+ 
   if (missingFields.length > 0) {
     // Display pop-up message for missing fields
     handleSnackbarOpen(`Please fill in the required fields to register`);
@@ -125,7 +124,7 @@ const FirebaseRegister = ({ ...others }) => {
       sector: values.sector,
       country: values.country,
     };
-
+ 
     //console.log("userRef.current:", userRef.current);
     // Make a POST request to your backend API
     fetch('http://localhost:8080/registerUser', {
@@ -139,10 +138,10 @@ const FirebaseRegister = ({ ...others }) => {
     .then(data => {
       console.log(data);
       handleSnackbarOpen('User registered successfully');
-
+ 
       // Navigate to the login page
       navigate('/');
-
+ 
     })
       .catch(error => {
         // Handle any errors here
@@ -151,26 +150,24 @@ const FirebaseRegister = ({ ...others }) => {
         handleSnackbarOpen('Email already exists. Please login');
       });
   }
-
-  
-
+ 
+ 
+ 
   const handleSnackbarOpen = (message) => {
     setSnackbarMessage(message);
     setOpenSnackbar(true);
   };
-
-
-  return (
-    
+ return (
+   
     <>
       <Grid container direction="column" justifyContent="center" spacing={2}>
         <Grid item xs={12}>
-          
+         
         </Grid>
-        
-        
+       
+       
       </Grid>
-
+ 
       <Formik
         initialValues={{
           firstName: '', // Add firstName
@@ -195,7 +192,7 @@ const FirebaseRegister = ({ ...others }) => {
           country: Yup.string().required('Country is required'), // Add validation for country
           role: Yup.string().required('Role is required'), // Add validation for role
         })}
-        
+       
         onSubmit={handleForm}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
@@ -209,7 +206,7 @@ const FirebaseRegister = ({ ...others }) => {
                   name="firstName"
                   type="text"
                   value={values.firstName}
-                  onChange={handleChange} 
+                  onChange={handleChange}
                   sx={{ ...theme.typography.customInput }}
                 />
               </Grid>
@@ -243,7 +240,7 @@ const FirebaseRegister = ({ ...others }) => {
                 </FormHelperText>
               )}
             </FormControl>
-
+ 
             <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput }}>
               <InputLabel htmlFor="outlined-adornment-password-register">Password</InputLabel>
               <OutlinedInput
@@ -278,7 +275,7 @@ const FirebaseRegister = ({ ...others }) => {
                 </FormHelperText>
               )}
             </FormControl>
-
+ 
             <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
   <InputLabel htmlFor="outlined-adornment-sector">Sector</InputLabel>
   <Select
@@ -294,7 +291,7 @@ const FirebaseRegister = ({ ...others }) => {
     ))}
   </Select>
 </FormControl>
-
+ 
 <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
   <InputLabel htmlFor="outlined-adornment-country">Country</InputLabel>
   <Select
@@ -310,7 +307,7 @@ const FirebaseRegister = ({ ...others }) => {
     ))}
   </Select>
 </FormControl>
-
+ 
             <TextField
               fullWidth
               label="Company"
@@ -322,7 +319,7 @@ const FirebaseRegister = ({ ...others }) => {
               //defaultValue=""
               sx={{ ...theme.typography.customInput }}
             />
-
+ 
             <TextField
               fullWidth
               label="Phone Number"
@@ -334,7 +331,7 @@ const FirebaseRegister = ({ ...others }) => {
               //defaultValue=""
               sx={{ ...theme.typography.customInput }}
             />
-
+ 
             <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
               <InputLabel htmlFor="outlined-adornment-role">Role</InputLabel>
               <Select
@@ -350,9 +347,9 @@ const FirebaseRegister = ({ ...others }) => {
                 ))}
               </Select>
             </FormControl>
-
-            
-
+ 
+           
+ 
             {strength !== 0 && (
               <FormControl fullWidth>
                 <Box sx={{ mb: 2 }}>
@@ -369,7 +366,7 @@ const FirebaseRegister = ({ ...others }) => {
                 </Box>
               </FormControl>
             )}
-
+ 
             <Grid container alignItems="center" justifyContent="space-between">
               <Grid item>
                 <FormControlLabel
@@ -389,7 +386,7 @@ const FirebaseRegister = ({ ...others }) => {
                 <FormHelperText error>{errors.submit}</FormHelperText>
               </Box>
             )}
-
+ 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>
                 <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary"  onClick={handleForm}>
@@ -414,9 +411,9 @@ const FirebaseRegister = ({ ...others }) => {
           {snackbarMessage}
         </MuiAlert>
       </Snackbar>
-
+ 
     </>
   );
 };
-
+ 
 export default FirebaseRegister;

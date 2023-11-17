@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
    cardData:null,
-   carbonData:null
+   carbonData:null,
+  graphData:null
 };
 
 export const cardSlice=createSlice({
@@ -42,11 +43,12 @@ export const cardSlice=createSlice({
       },
       setCarbonData(state, action) {
        const payLoadData=action.payload.data;
+       state.graphData=payLoadData;
        if(payLoadData.carbonReductionQuater!=null){
       const summer=payLoadData.carbonReductionQuater.summer/1000;
       const winter=payLoadData.carbonReductionQuater.winter/1000;
        const fall=payLoadData.carbonReductionQuater.fall/1000;
-       console.log(payLoadData);
+       console.log("PayloadData:",payLoadData);
         state.carbonData = {
           height: 480,
           type: 'bar',
@@ -133,7 +135,8 @@ export const cardSlice=createSlice({
       const next3Years=payLoadData.carbonReductionYear.nextThreeYears;
       const next5Years=payLoadData.carbonReductionYear.nextFiveYears;
        const next10Years=payLoadData.carbonReductionYear.nextTenYears;
-       console.log(payLoadData);
+       console.log("Payload1data:",payLoadData);
+       state.graphData=payLoadData;
         state.carbonData = {
           height: 480,
           type: 'bar',

@@ -15,6 +15,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@tabler/icons": "^1.72.0",
     "apexcharts": "^3.35.3",
+    "axios": "^1.6.2",
     "formik": "^2.2.9",
     "framer-motion": "^6.3.16",
     "material-ui-popup-state": "^4.0.1",
@@ -29,6 +30,7 @@
     "react-router-dom": "6.3.0",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
+    "xlsx": "^0.18.5",
     "yup": "^0.32.11"
   },
   "scripts": {
