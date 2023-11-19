@@ -62,17 +62,16 @@ const Dashboard = () => {
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item lg={4} md={6} sm={6} xs={12}>
-            {cardList != null && Object.prototype.hasOwnProperty.call(cardList, 1) ? (
-              <EarningCard percentage={cardList[1].totalPercent} isLoading={isLoading} />
-            ) : (
-              <EarningCard percentage="10" isLoading={isLoading} />
-            )}
+          {cardList!=null && Object.prototype.hasOwnProperty.call(cardList, 1)?(
+            <EarningCard percentage={cardList[1].totalPercent} isLoading={isLoading} cardColor="#90CAF9" />):( <EarningCard percentage="0" isLoading={isLoading} scopeText="Scope 1" cardColor="#90CAF9" />)}
           </Grid>
           <Grid item lg={4} md={6} sm={6} xs={12}>
-            <EarningCard isLoading={isLoading} />
+          {cardList!=null && Object.prototype.hasOwnProperty.call(cardList, 2)?(
+            <EarningCard percentage={cardList[2].totalPercent} isLoading={isLoading} cardColor="#1E88E5D9"/>):( <EarningCard percentage="0" isLoading={isLoading} scopeText="Scope 2" cardColor="#1E88E5D9" />)}
           </Grid>
           <Grid item lg={4} md={6} sm={12} xs={12}>
-            <EarningCard isLoading={isLoading} />
+          {cardList!=null && Object.prototype.hasOwnProperty.call(cardList, 3)?(
+            <EarningCard percentage={cardList[3].totalPercent} isLoading={isLoading} cardColor="#5E35B1"/>):( <EarningCard percentage="0" isLoading={isLoading} scopeText="Scope 3" cardColor="#5E35B1"/>)}
           </Grid>
         </Grid>
       </Grid>
@@ -84,7 +83,7 @@ const Dashboard = () => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Grid container spacing={gridSpacing}>
+      <Grid container spacing={gridSpacing}>
           {chartData != null ? (
             <Grid item xs={12} md={8}>
               <TotalGrowthBarChart chartingData={chartData} isLoading={isLoading} />

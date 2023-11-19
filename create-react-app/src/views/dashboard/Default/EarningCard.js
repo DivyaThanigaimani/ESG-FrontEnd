@@ -20,7 +20,7 @@ import PictureAsPdfTwoToneIcon from '@mui/icons-material/PictureAsPdfOutlined';
 import ArchiveTwoToneIcon from '@mui/icons-material/ArchiveOutlined';
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.dark,
+  //backgroundColor: theme.palette.secondary.dark,
   color: '#fff',
   overflow: 'hidden',
   position: 'relative',
@@ -57,7 +57,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 // ===========================|| DASHBOARD DEFAULT - EARNING CARD ||=========================== //
 
-const EarningCard = ({ isLoading,percentage}) => {
+const EarningCard = ({ isLoading,percentage, scopeText, cardColor}) => {
  // const cardList=useSelector((state) => state.cardSlice.cardData);
   const theme = useTheme();
 
@@ -76,7 +76,7 @@ const EarningCard = ({ isLoading,percentage}) => {
       {isLoading ? (
         <SkeletonEarningCard />
       ) : (
-        <CardWrapper border={false} content={false}>
+        <CardWrapper border={false} content={false} sx={{ backgroundColor: cardColor }}>
           <Box sx={{ p: 2.25 }}>
             <Grid container direction="column">
               <Grid item>
@@ -168,10 +168,10 @@ const EarningCard = ({ isLoading,percentage}) => {
                   sx={{
                     fontSize: '1rem',
                     fontWeight: 500,
-                    color: theme.palette.secondary[200]
+                    color: '#fff',
                   }}
                 >
-                 Scope 1
+                {scopeText}
                 </Typography>
               </Grid>
             </Grid>
@@ -183,7 +183,9 @@ const EarningCard = ({ isLoading,percentage}) => {
 };
 
 EarningCard.propTypes = {
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  scopeText: PropTypes.string,
+  cardColor: PropTypes.string,
 };
 
 export default EarningCard;
