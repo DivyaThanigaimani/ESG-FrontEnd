@@ -12,13 +12,13 @@ const other = {
   children: [
     {
       id: 'sample-page',
-      title: 'Sample Page',
+      title: 'Carbon Analysis',
       type: 'item',
-      url: '/sample-page',
+      url: '/dashboard/Default/sample-page',
       icon: icons.IconBrandChrome,
       breadcrumbs: false
-    },
-    {
+    }
+    /*{
       id: 'documentation',
       title: 'Documentation',
       type: 'item',
@@ -26,7 +26,7 @@ const other = {
       icon: icons.IconHelp,
       external: true,
       target: true
-    }
+    }*/
   ]
 };
 

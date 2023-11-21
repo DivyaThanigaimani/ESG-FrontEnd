@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import * as XLSX from 'xlsx';
 
 
-const DropDownSection = ({ cardList, generateExcel }) => {
+const DropDownSection = () => {
  
  
   const dispatch = useDispatch();
@@ -142,13 +142,9 @@ const DropDownSection = ({ cardList, generateExcel }) => {
 
         <Button variant="contained" onClick={(e) => handleSubmit(e)} color="primary" type="submit">
           Submit
-        </Button>
-        <Button variant="contained" onClick={() => generateExcel(cardList)} color="primary" type="button">
-          Generate Report
-        </Button>
-
+        </Button> &nbsp;
         <Button variant="contained" onClick={handleDownloadPayloadExcel} color="primary" type="button">
-          Download Payload Excel
+          Generate Report
         </Button>
 
 

@@ -10,7 +10,7 @@ import EarningCard from './EarningCard';
 //import TotalGrowthBarChart from './TotalGrowthBarChart';
 import { gridSpacing } from 'store/constant';
 import Generate from './Generate'
-import * as XLSX from 'xlsx';
+//import * as XLSX from 'xlsx';
 import UploadSection from 'layout/MainLayout/Header/UploadSection';
 
 
@@ -19,14 +19,12 @@ import UploadSection from 'layout/MainLayout/Header/UploadSection';
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
   const cardList=useSelector((state) => state.cardSlice.cardData);
-  const chartData=useSelector((state) => state.cardSlice.carbonData);
-  console.log("The chart data is",chartData);
-  console.log("The chart list is",cardList);
+  //const chartData=useSelector((state) => state.cardSlice.carbonData);
+  //console.log("The chart data is",chartData);
+  //console.log("The chart list is",cardList);
   useEffect(() => {
     setLoading(false);
   }, []);
-
-
   const generateExcel = (cardList) => {
     try {
       // Flatten the nested structure
@@ -51,7 +49,8 @@ const Dashboard = () => {
       console.error('Error generating Excel:', error);
     }
   };
-  console.log('Updated chartData:', chartData);
+
+ 
 //generateChartDataExcel(chartData, category);
 return (
     <Grid container spacing={gridSpacing}>
@@ -79,18 +78,7 @@ return (
 />
 
       </Grid>
-      <Grid item xs={12}>
-      <Grid container spacing={gridSpacing}>
-          {chartData != null ? (
-            <Grid item xs={12} md={8}>
-             
-            </Grid>
-          ) : (
-            <h1>No Data</h1>
-          )}
-          
-        </Grid>
-      </Grid>
+      
     </Grid>
   );
   

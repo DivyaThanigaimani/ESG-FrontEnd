@@ -1,20 +1,30 @@
-// material-ui
-import { Typography } from '@mui/material';
+// SamplePage Component
 
-// project imports
+//import { Typography } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
+import DropDownSection from '../dashboard/Default/DropDownSection'  
+//import * as XLSX from 'xlsx';
+import { useSelector } from 'react-redux';
+import TotalGrowthBarChart from '../dashboard/Default/TotalGrowthBarChart';
+
+// Function to generate Excel
+
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
-const SamplePage = () => (
-  <MainCard title="Sample Card">
-    <Typography variant="body2">
-      Lorem ipsum dolor sit amen, consenter nipissing eli, sed do elusion tempos incident ut laborers et doolie magna alissa. Ut enif ad
-      minim venice, quin nostrum exercitation illampu laborings nisi ut liquid ex ea commons construal. Duos aube grue dolor in reprehended
-      in voltage veil esse colum doolie eu fujian bulla parian. Exceptive sin ocean cuspidate non president, sunk in culpa qui officiate
-      descent molls anim id est labours.
-    </Typography>
-  </MainCard>
-);
+const SamplePage = () =>  {
+  const chartData=useSelector((state) => state.cardSlice.carbonData);
+  console.log("The chart data is",chartData);
+  return (
+    <MainCard title="Carbon Reduction Analysis">
+      <DropDownSection generateExcel={generateExcel} />
+      {chartData != null ? (
+        <TotalGrowthBarChart chartingData={chartData} isLoading={false} />
+      ) : (
+        <h1>No Data</h1>
+      )}
+    </MainCard>
+  );
+};
 
 export default SamplePage;
