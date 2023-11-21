@@ -7,10 +7,11 @@ import { Grid } from '@mui/material';
 import EarningCard from './EarningCard';
 //import PopularCard from './PopularCard';
 
-import TotalGrowthBarChart from './TotalGrowthBarChart';
+//import TotalGrowthBarChart from './TotalGrowthBarChart';
 import { gridSpacing } from 'store/constant';
-import DropDownSection from './DropDownSection'
+import Generate from './Generate'
 import * as XLSX from 'xlsx';
+import UploadSection from 'layout/MainLayout/Header/UploadSection';
 
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
@@ -52,12 +53,7 @@ const Dashboard = () => {
   };
   console.log('Updated chartData:', chartData);
 //generateChartDataExcel(chartData, category);
-
-
-
-
-
-  return (
+return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
@@ -76,22 +72,23 @@ const Dashboard = () => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <DropDownSection
-          cardList={cardList}
-          generateExcel={generateExcel}
-         
-        />
+      <UploadSection />
+      <Generate
+    cardList={cardList}
+    generateExcel={generateExcel}
+/>
+
       </Grid>
       <Grid item xs={12}>
       <Grid container spacing={gridSpacing}>
           {chartData != null ? (
             <Grid item xs={12} md={8}>
-              <TotalGrowthBarChart chartingData={chartData} isLoading={isLoading} />
+             
             </Grid>
           ) : (
             <h1>No Data</h1>
           )}
-          <Grid item xs={12} md={4}></Grid>
+          
         </Grid>
       </Grid>
     </Grid>

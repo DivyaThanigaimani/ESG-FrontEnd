@@ -1,13 +1,12 @@
-//import { Link } from 'react-router-dom';
-//import { useSelector } from 'react-redux';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import React, { useRef, useState, useEffect } from 'react'
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
- 
 import { useNavigate } from 'react-router-dom';
- 
+
+
+
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -31,11 +30,7 @@ import {
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
- 
-// project imports
-//import useScriptRef from 'hooks/useScriptRef';
-//import Google from 'assets/images/icons/social-google.svg';
-import AnimateButton from 'ui-component/extended/AnimateButton';
+ import AnimateButton from 'ui-component/extended/AnimateButton';
 import { strengthColor, strengthIndicator } from 'utils/password-strength';
  
 // assets
@@ -45,6 +40,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 // ===========================|| FIREBASE - REGISTER ||=========================== //
  
 const FirebaseRegister = ({ ...others }) => {
+  const [countryOptions, setCountryOptions] = useState([]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const theme = useTheme();
@@ -59,18 +55,14 @@ const FirebaseRegister = ({ ...others }) => {
   const [level, setLevel] = useState();
  
 // default values for drop downfields
-  const sectorOptions = ['manufacturing', 'sector2', 'sector3', 'sector4'];
-  const countryOptions = ['Canada', 'Country2', 'Country3'];
-  const roleOptions = ['student', 'manager'];
+  const sectorOptions = ['Manufacturing', 'IT', 'Agriculture', 'Construction', 'Transportation', 'Energy', 'Food', 'Mining', 'Health Care'];
+  //const countryOptions = ['Canada', 'Country2', 'Country3'];
+  const roleOptions = ['Admin', 'Manager', 'Student', 'User'];
  
   useEffect(() => {
     changePassword('123456');
   }, []);
  
- 
-  //const googleHandler = async () => {
-    //console.error('Register');
-  //};
  
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -101,17 +93,15 @@ const FirebaseRegister = ({ ...others }) => {
   });
  
   const handleForm = (values) => {
-    //console.log("Form Values:", values);
-    // Check for required fields
-  const requiredFields = ['firstName', 'lastName', 'email', 'password', 'company', 'sector', 'country', 'phoneNumber', 'role'];
- 
-  const missingFields = requiredFields.filter(field => !values[field]);
- 
-  if (missingFields.length > 0) {
-    // Display pop-up message for missing fields
-    handleSnackbarOpen(`Please fill in the required fields to register`);
-    return;
-  }
+    const requiredFields = ['firstName', 'lastName', 'email', 'password', 'company', 'sector', 'country', 'phoneNumber', 'role'];
+
+    const missingFields = requiredFields.filter((field) => !values[field]);
+
+    if (missingFields.length > 0) {
+      handleSnackbarOpen(`Please fill in all the required fields to register`);
+      return;
+    }
+
     // Update the userRef with form values
     userRef.current = {
       emailAddress: values.email,
@@ -124,6 +114,7 @@ const FirebaseRegister = ({ ...others }) => {
       sector: values.sector,
       country: values.country,
     };
+    //localStorage.setItem('firstName', values.firstName);
  
     //console.log("userRef.current:", userRef.current);
     // Make a POST request to your backend API
@@ -153,10 +144,37 @@ const FirebaseRegister = ({ ...others }) => {
  
  
  
-  const handleSnackbarOpen = (message) => {
+  const handleSnackbarOpen = (message, callback) => {
     setSnackbarMessage(message);
     setOpenSnackbar(true);
+  
+    if (callback && typeof callback === 'function') {
+      // Execute the callback function after a delay (adjust the duration as needed)
+      setTimeout(callback, 3000);
+    }
   };
+
+  useEffect(() => {
+    // Fetch country data when the component mounts
+    fetch('https://restcountries.com/v2/all')
+      .then((response) => response.json())
+      .then((data) => {
+        // Extract country names from the API response
+        const names = data.map((country) => country.name);
+        setCountryOptions(names);
+      })
+      .catch((error) => console.error('Error fetching country data:', error));
+  }, []);
+
+
+const handleBlur = (field) => (event) => {
+    if (!event.target.value) {
+      handleSnackbarOpen(`Please fill in the ${field} field to register`);
+    }
+  };
+
+
+
  return (
    
     <>
@@ -198,16 +216,16 @@ const FirebaseRegister = ({ ...others }) => {
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit} {...others}>
             <Grid container spacing={matchDownSM ? 0 : 2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={10} sm={6}>
                 <TextField
                   fullWidth
                   label="First Name"
-                  margin="normal"
+                  margin="dense" 
                   name="firstName"
                   type="text"
                   value={values.firstName}
                   onChange={handleChange}
-                  sx={{ ...theme.typography.customInput }}
+                  sx={{ ...theme.typography.customInput, height: '10px' }} 
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -283,6 +301,7 @@ const FirebaseRegister = ({ ...others }) => {
     value={values.sector}
     name="sector"
     onChange={handleChange}
+    sx={{ height: '62px' }} 
   >
     {sectorOptions.map((option) => (
       <MenuItem key={option} value={option}>
@@ -293,20 +312,21 @@ const FirebaseRegister = ({ ...others }) => {
 </FormControl>
  
 <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
-  <InputLabel htmlFor="outlined-adornment-country">Country</InputLabel>
-  <Select
-    id="outlined-adornment-country"
-    value={values.country}
-    name="country"
-    onChange={handleChange}
-  >
-    {countryOptions.map((option) => (
-      <MenuItem key={option} value={option}>
-        {option}
-      </MenuItem>
-    ))}
-  </Select>
-</FormControl>
+        <InputLabel htmlFor="outlined-adornment-country">Country</InputLabel>
+        <Select
+          id="outlined-adornment-country"
+          value={values.country}
+          name="country"
+          onChange={handleChange}
+          sx={{ height: '62px' }}
+        >
+          {countryOptions.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
  
             <TextField
               fullWidth
@@ -332,21 +352,24 @@ const FirebaseRegister = ({ ...others }) => {
               sx={{ ...theme.typography.customInput }}
             />
  
-            <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-role">Role</InputLabel>
-              <Select
-                id="outlined-adornment-role"
-                value={values.role}
-                name="role"
-                onChange={handleChange}
-              >
-                {roleOptions.map((option) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+ <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
+  <InputLabel htmlFor="outlined-adornment-role" shrink={Boolean(values.role)}>
+    Role
+  </InputLabel>
+  <Select
+    id="outlined-adornment-role"
+    value={values.role}
+    name="role"
+    onChange={handleChange}
+    sx={{ height: '62px' }} 
+  >
+    {roleOptions.map((option) => (
+      <MenuItem key={option} value={option}>
+        {option}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
  
            
  
@@ -388,11 +411,19 @@ const FirebaseRegister = ({ ...others }) => {
             )}
  
             <Box sx={{ mt: 2 }}>
-              <AnimateButton>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary"  onClick={handleForm}>
-                  REGISTER
-                </Button>
-              </AnimateButton>
+            <AnimateButton>
+              <Button
+                disableElevation
+                disabled={isSubmitting}
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+                color="primary"
+              >
+                REGISTER
+              </Button>
+            </AnimateButton>
             </Box>
           </form>
         )}

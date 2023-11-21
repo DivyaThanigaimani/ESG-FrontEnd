@@ -31,18 +31,32 @@ const UploadSection = () => {
         }
     }
     return (
-        <Button
-          variant="contained"
-          component="label"
-          startIcon={<CloudUploadIcon />}
-        >
-          Upload File
-          <input type="file" hidden onChange={handleFileUpload}/>
-        </Button>
+      <Button
+      variant="contained"
+      component="label"
+      startIcon={<CloudUploadIcon />}
+      style={{
+        fontSize: '1.5rem',
+        padding: '19px 300px',
+        margin: 'auto',  // This will center the button
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: '100px',
+        marginLeft:'300px',
+        marginRight:'150px', // Add margin at the bottom
+        // You can add more styles here
+      }}
+    >
+      Upload File
+      <input type="file" hidden onChange={handleFileUpload}/>
+    </Button>
+    
+    
       );
-
+ 
 };
-
-
-  
+ 
+ 
+ 
 export default connect(null, { uploadFile })(UploadSection);

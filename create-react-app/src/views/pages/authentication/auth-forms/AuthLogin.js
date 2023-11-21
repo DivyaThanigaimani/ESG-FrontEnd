@@ -48,6 +48,7 @@ const AuthLogin = () => {
       const response = await axios.get(`http://localhost:8080/loginmethod/${encodedUsername}/${encodedPassword}`);
   
       if (response.status === 200) {
+        localStorage.setItem('firstName', response.data.firstName);
         // Authentication successful
         navigate('dashboard/Default');
       } else {
@@ -151,7 +152,7 @@ const AuthLogin = () => {
                 size="large"
                 type="submit"
                 variant="contained"
-                color="secondary"
+                color="primary"
               >
                 Sign in
               </Button>

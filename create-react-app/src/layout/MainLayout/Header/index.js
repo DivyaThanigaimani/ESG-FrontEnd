@@ -1,23 +1,22 @@
 import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
+ 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Avatar, Box, ButtonBase } from '@mui/material';
-
+import { Avatar, Box, ButtonBase, Typography } from '@mui/material';
+ 
 // project imports
 import LogoSection from '../LogoSection';
-import UploadSection from './UploadSection';
-
-import NotificationSection from './NotificationSection';
-
+//import UploadSection from './UploadSection';
+ 
 // assets
 import { IconMenu2 } from '@tabler/icons';
-
+ 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
-
-const Header = ({ handleLeftDrawerToggle }) => {
+ 
+const Header = ({ handleLeftDrawerToggle}) => {
   const theme = useTheme();
-
+  const storedFirstName = localStorage.getItem('firstName');
   return (
     <>
       {/* logo & toggler button */}
@@ -54,22 +53,30 @@ const Header = ({ handleLeftDrawerToggle }) => {
           </Avatar>
         </ButtonBase>
       </Box>
-
+ 
       {/* header search */}
       <Box sx={{ flexGrow: 0.25 }} />
-      <UploadSection />
+     
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ flexGrow: 1 }} />
-
-      {/* notification & profile */}
-      <NotificationSection />
-      
+ 
+      {/* Display Hello, firstName */}
+      <Typography variant="subtitle1" sx={{ marginRight: '16px', fontSize: '20px'}}>
+        Hello, {storedFirstName}
+      </Typography>
     </>
   );
 };
-
+ 
 Header.propTypes = {
-  handleLeftDrawerToggle: PropTypes.func
+  handleLeftDrawerToggle: PropTypes.func,
+  storedFirstName: PropTypes.string // Make sure to add the correct prop type for storedFirstName
 };
-
-export default Header;
+ 
+// Connect the Header component to the Redux store
+const mapStateToProps = (state) => ({
+  storedFirstName: state.cardSlice.firstName
+});
+ 
+export default connect(mapStateToProps)(Header);
+ 
