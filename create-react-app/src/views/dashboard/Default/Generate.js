@@ -6,7 +6,7 @@ import { cardSlice } from '../../../slice/cardSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 //import * as XLSX from 'xlsx';
- const Generate = ({ cardList, generateExcel }) => {
+ const Generate = ({ cardList, generate }) => {
  
  
   const dispatch = useDispatch();
@@ -70,19 +70,22 @@ import { useSelector } from 'react-redux';
       <form>
     <Button
   variant="contained"
-  onClick={() => generateExcel(cardList)}
+  onClick={() => generate(cardList)}
   color="primary"
   type="button"
   style={{
     fontSize: '1.5rem',
-        padding: '19px 380px',
-        margin: 'auto',  // This will center the button
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginTop: '100px',
-        marginLeft:'300px',
-        marginRight:'150px', 
+    float:'right',
+    marginTop:'-5%'
+    
+        //padding: '19px 380px',
+       // margin: 'auto',  // This will center the button
+        //display: 'flex',
+        //flexDirection: 'column',
+        //alignItems: 'center',
+        //marginTop: '100px',
+        //marginLeft:'300px',
+        //marginRight:'150px', 
         // You can add more styles here
   }}
 >

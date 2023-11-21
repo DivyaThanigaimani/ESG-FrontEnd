@@ -37,14 +37,15 @@ const UploadSection = () => {
       startIcon={<CloudUploadIcon />}
       style={{
         fontSize: '1.5rem',
-        padding: '19px 300px',
-        margin: 'auto',  // This will center the button
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginTop: '100px',
-        marginLeft:'300px',
-        marginRight:'150px', // Add margin at the bottom
+        //margin: '101px 121px auto 300px',
+        //padding: '19px 300px',
+        //margin: 'auto',  // This will center the button
+        //display: 'flex',
+        //flexDirection: 'column',
+        //alignItems: 'center',
+        //marginTop: '100px',
+        //marginLeft:'300px',
+        //marginRight:'150px', // Add margin at the bottom
         // You can add more styles here
       }}
     >

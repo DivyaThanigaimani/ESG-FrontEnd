@@ -25,24 +25,25 @@ const Dashboard = () => {
   useEffect(() => {
     setLoading(false);
   }, []);
-  const generateExcel = (cardList) => {
+  
+  const generate = (cardList) => {
     try {
       // Flatten the nested structure
       const flattenedData = Object.values(cardList).flatMap((group) => group);
-  
+ 
       // Define column names
       const columns = ['region', 'measures', 'unit', 'emission_amt', 'percent'];
-  
+ 
       // Create an array with headers as the first element
       const excelData = [columns, ...flattenedData.map((item) => columns.map((col) => item[col]))];
-  
+ 
       // Create a worksheet
       const ws = XLSX.utils.aoa_to_sheet(excelData);
-  
+ 
       // Create workbook and add worksheet
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'ReportSheet');
-  
+ 
       // Save file
       XLSX.writeFile(wb, 'dashboard_data.xlsx');
     } catch (error) {
@@ -50,7 +51,6 @@ const Dashboard = () => {
     }
   };
 
- 
 //generateChartDataExcel(chartData, category);
 return (
     <Grid container spacing={gridSpacing}>
@@ -74,7 +74,7 @@ return (
       <UploadSection />
       <Generate
     cardList={cardList}
-    generateExcel={generateExcel}
+    generate={generate}
 />
 
       </Grid>
