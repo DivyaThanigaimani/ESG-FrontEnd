@@ -167,11 +167,7 @@ const FirebaseRegister = ({ ...others }) => {
   }, []);
 
 
-const handleBlur = (field) => (event) => {
-    if (!event.target.value) {
-      handleSnackbarOpen(`Please fill in the ${field} field to register`);
-    }
-  };
+
 
 
 
