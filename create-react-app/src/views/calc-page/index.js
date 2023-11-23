@@ -34,24 +34,28 @@ const CalcPage = () => {
         />
       </Button>
       {apiResponse && (
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              {Object.keys(apiResponse[0]).map((key) => (
-                <th key={key}>{key.charAt(0).toUpperCase() + key.slice(1)}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {apiResponse.map((item, index) => (
-              <tr key={index}>
-                {Object.values(item).map((value, index) => (
-                  <td key={index} style={{ border: '1px solid #dee2e6', padding: '8px' }}>{value}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+       <Table striped bordered hover style={{ borderCollapse: 'collapse', marginTop: '10px' }}>
+       <thead>
+         <tr>
+           {Object.keys(apiResponse[0])
+             .filter((key) => key !== 'unit') // Exclude the entire "unit" column
+             .map((key) => (
+               <th key={key}>{key.charAt(0).toUpperCase() + key.slice(1)}</th>
+             ))}
+         </tr>
+       </thead>
+       <tbody>
+         {apiResponse.map((item, index) => (
+           <tr key={index}>
+             {Object.entries(item)
+               .filter(([key]) => key !== 'unit') // Exclude the entire "unit" column
+               .map(([key, value]) => (
+                 <td key={key} style={{ border: '1px solid #dee2e6', padding: '8px' }}>{value}</td>
+               ))}
+           </tr>
+         ))}
+       </tbody>
+     </Table>
       )}
     </MainCard>
   );
