@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { Divider, Grid, Typography, useMediaQuery, CssBaseline } from '@mui/material';
 
@@ -68,7 +68,9 @@ const Login = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <Grid item container direction="column" alignItems="center" xs={12}>
-                     
+                      <Typography component={Link} to="/pages/register/register3" variant="subtitle1" sx={{ textDecoration: 'none' }}>
+                        Sign up here.
+                      </Typography>
                     </Grid>
                   </Grid>
                 </Grid>
