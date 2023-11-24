@@ -49,6 +49,7 @@ const AuthLogin = () => {
   
       if (response.status === 200) {
         localStorage.setItem('firstName', response.data.firstName);
+        localStorage.setItem('role', response.data.role);
         // Authentication successful
         navigate('dashboard/Default');
       } else {

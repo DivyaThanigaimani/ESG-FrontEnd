@@ -14,10 +14,7 @@ import SkeletonEarningCard from 'ui-component/cards/Skeleton/EarningCard';
 import EarningIcon from 'assets/images/icons/earning.svg';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import GetAppTwoToneIcon from '@mui/icons-material/GetAppOutlined';
-import FileCopyTwoToneIcon from '@mui/icons-material/FileCopyOutlined';
-import PictureAsPdfTwoToneIcon from '@mui/icons-material/PictureAsPdfOutlined';
-import ArchiveTwoToneIcon from '@mui/icons-material/ArchiveOutlined';
+
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
   //backgroundColor: theme.palette.secondary.dark,
@@ -57,7 +54,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 // ===========================|| DASHBOARD DEFAULT - EARNING CARD ||=========================== //
 
-const EarningCard = ({ isLoading,percentage, scopeText, cardColor}) => {
+const EarningCard = ({ isLoading,percentage, scopeText, cardColor,carddata}) => {
  // const cardList=useSelector((state) => state.cardSlice.cardData);
   const theme = useTheme();
 
@@ -126,18 +123,13 @@ const EarningCard = ({ isLoading,percentage, scopeText, cardColor}) => {
                         horizontal: 'right'
                       }}
                     >
-                      <MenuItem onClick={handleClose}>
-                        <GetAppTwoToneIcon sx={{ mr: 1.75 }} /> Import Card
+                    {carddata && carddata.map((card) => (
+                        <MenuItem key={card.measures} onClick={handleClose}>
+                         {card.measures} - {card.percent}
                       </MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        <FileCopyTwoToneIcon sx={{ mr: 1.75 }} /> Copy Data
-                      </MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        <PictureAsPdfTwoToneIcon sx={{ mr: 1.75 }} /> Export
-                      </MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        <ArchiveTwoToneIcon sx={{ mr: 1.75 }} /> Archive File
-                      </MenuItem>
+                    ))}
+
+                     
                     </Menu>
                   </Grid>
                 </Grid>
