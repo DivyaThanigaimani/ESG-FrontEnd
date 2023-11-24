@@ -64,15 +64,15 @@ return (
         <Grid container spacing={gridSpacing}>
           <Grid item lg={4} md={6} sm={6} xs={12}>
           {cardList!=null && Object.prototype.hasOwnProperty.call(cardList, 1)?(
-            <EarningCard carddata={cardList[1]} percentage={cardList[1].totalPercent} isLoading={isLoading} cardColor="#90CAF9" />):( <EarningCard percentage="0" isLoading={isLoading} scopeText="Scope 1" cardColor="#90CAF9" />)}
+            <EarningCard carddata={cardList[1]}  scopeText="Scope 1" percentage={cardList[1].totalPercent} isLoading={isLoading} cardColor="#90CAF9" />):( <EarningCard percentage="0" isLoading={isLoading} scopeText="Scope 1" cardColor="#90CAF9" />)}
           </Grid>
           <Grid item lg={4} md={6} sm={6} xs={12}>
           {cardList!=null && Object.prototype.hasOwnProperty.call(cardList, 2)?(
-            <EarningCard carddata={cardList[2]} percentage={cardList[2].totalPercent} isLoading={isLoading} cardColor="#1E88E5D9"/>):( <EarningCard percentage="0" isLoading={isLoading} scopeText="Scope 2" cardColor="#1E88E5D9" />)}
+            <EarningCard carddata={cardList[2]} scopeText="Scope 2" percentage={cardList[2].totalPercent} isLoading={isLoading} cardColor="#1E88E5D9"/>):( <EarningCard percentage="0" isLoading={isLoading} scopeText="Scope 2" cardColor="#1E88E5D9" />)}
           </Grid>
           <Grid item lg={4} md={6} sm={12} xs={12}>
           {cardList!=null && Object.prototype.hasOwnProperty.call(cardList, 3)?(
-            <EarningCard carddata={cardList[3]} percentage={cardList[3].totalPercent} isLoading={isLoading} cardColor="#5E35B1"/>):( <EarningCard percentage="0" isLoading={isLoading} scopeText="Scope 3" cardColor="#5E35B1"/>)}
+            <EarningCard carddata={cardList[3]} scopeText="Scope 3" percentage={cardList[3].totalPercent} isLoading={isLoading} cardColor="#5E35B1"/>):( <EarningCard percentage="0" isLoading={isLoading} scopeText="Scope 3" cardColor="#5E35B1"/>)}
           </Grid>
         </Grid>
       </Grid>

@@ -8,6 +8,17 @@
 .fullscreen .react-images__blanket {
   z-index: 1200;
 }
+/* Badge.css */
+
+.badge {
+  display: inline-block;
+  padding: 0.5em 1em;
+  background-color: #007bff; /* You can change this color to your preference */
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-weight: bold;
+}
 
 // ==============================|| APEXCHART ||============================== //
 

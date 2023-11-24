@@ -58,13 +58,18 @@ const Header = ({ handleLeftDrawerToggle}) => {
       <Box sx={{ flexGrow: 0.25 }} />
      
       <Box sx={{ flexGrow: 1 }} />
-      <Box sx={{ flexGrow: 1 }} />
+      <Box sx={{ flexGrow: 1 }}>
+
+      <span className="badge">GRI Framework</span>
+      </Box>
  
       {/* Display Hello, firstName */}
       <Typography variant="subtitle1" sx={{ marginRight: '16px', fontSize: '20px'}}>
         Hello, {storedFirstName}
       </Typography>
+      
     </>
+    
   );
 };
  
